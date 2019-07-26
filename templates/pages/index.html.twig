@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+{%  block title 'Home' %}
+
+{% block body %}
+    <div id="all">
+        <!-- Top bar-->
+        <div class="top-bar">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-6 d-md-block d-none">
+                        <p>Contacts&nbsp;<a class="text-white" href="tel:#">+221778213119</a> ou <a class="text-white" href="mailto:#">contact.fret-Online@gmail.com</a>.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-md-end justify-content-between">
+                            <ul class="list-inline contact-info d-block d-md-none">
+                                <li class="list-inline-item"><a href="tel:#"><i class="fa fa-phone"></i></a></li>
+                                <li class="list-inline-item"><a href="mailto:#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                            <div class="login">
+                                {% if app.user == false %}
+                                    <a href="{{ path('login') }}" class="login-btn"><i class="fa fa-sign-in"></i><span class="d-none d-md-inline-block">Se connecter</span></a>
+                                {% endif %}
+                                {% if app.user == false %}
+                                    <a href="{{ path('create_compte') }}" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">Créer un compte</span></a>
+                                {% endif %}
+                                {% if app.user  %}
+                                    <a href="{{ path('user_espace') }}" class="login-btn">Mon Espace &nbsp;<i class="fa fa-user-o"></i></a>
+                                {% endif %}
+                                {% if app.user  %}
+                                    <a href="{{ path('logout') }}" class="login-btn">Déconnection&nbsp;&nbsp;<i class="fa fa-sign-out"></i></a>
+                                {% endif %}
+                            </div>
+                            <ul class="social-custom list-inline">
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top bar end-->
+        <!-- Navbar Start-->
+        <header class="nav-holder make-sticky">
+            <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+                <div class="container"><a href="{{ path('home') }}" class="navbar-brand home">
+                        <h2 class="d-none d-md-inline-block font-weight-bold text-bold"><br>Frêt Online</h2>
+                    </a>
+                    <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
+                    <div id="navigation" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item nav_link nav_link_active">
+                                <a class="nav-link active lnk" href="{{ path('home') }}">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('fret.direct') }}">Fret en direct</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('alert.fret') }}">Alert fret</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('faq') }}">Comment ça marche ?</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('contact') }}">Contact</a>
+                            </li>
+                            <!-- ========== Contact dropdown end ==================-->
+                        </ul>
+                    </div>
+                    <div id="search" class="collapse clearfix">
+                        <form role="search" class="navbar-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search" class="form-control"><span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Navbar End-->
+        {% include 'default/block-slider.html.twig' %}
+        <section class="bar bg-gray no-mb padding-big text-md-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="text-uppercase text-left">Pourquoi Fret-Online</h2>
+                        <p class="text-p text-left"><i class="fa fa-handshake-o text-md-left text-primary"></i>&nbsp;&nbsp; Une mise en relation directe et sans intermédiaire entre differents operateurs du transport.</p>
+                        <p class="text-p text-left"><i class="fa fa-clock-o text-md-left text-primary"></i>&nbsp;&nbsp;Une actualisation en temps réel des trajets de véhicules</p>
+                        <p class="text-p text-left"><i class="fa fa-briefcase text-md-left text-primary"></i>&nbsp;&nbsp;Un espace de présentation pour votre entreprise</p>
+                        <p class="text-p text-left"><i class="fa fa-bell text-md-left text-primary"></i>&nbsp;&nbsp;Des alertes en « temps réel » sur les offres de fret et sur les recherches de véhicules</p>
+                        <p class="text-p text-left"><i class="fa fa-phone-square text-md-left text-primary"></i>&nbsp;&nbsp;Plus de contacts et de visibilité avec les annuaires « fret-online.sn »</p>
+                        <p><a href="{{ path('faq') }}" class="btn btn-template-main">Lire plus</a></p>
+                    </div>
+                    <div class="col-md-6 text-center"><img src="/build/img/15.jpg" alt="" class="img-fluid"></div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <div class="heading text-left">
+                            <h3>Packs</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row packages">
+                    <div class="col-md-4">
+                        <div class="package">
+                            <div class="package-header bg-primary color-white">
+                                <h5>Affreteur/Courtier</h5>
+                            </div>
+                            <div class="price-container d-flex align-items-end justify-content-center">
+                                <h4 class="h1"><span class="currency">0&nbsp;</span>fcfa</h4><span class="period">/ mois</span>
+                            </div>
+                            <ul class="list-unstyled text-left">
+                                <li class=""><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Notification en temps réel.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Possibilité de poster des offres.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Recherche élargie.</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;Espace de présentation entreprise.</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;3 camions gratuits.</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;Incription illimitté camions</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;MAJ trajet vehicule en temps réel.</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;Acces aux annuairex entreprises</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;Choix type abonnement</li>
+                            </ul><a href="{{ path('create_compte') }}" class="btn btn-template-outlined">Créer compte</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="package">
+                            <div class="package-header bg-primary color-white">
+                                <h5>Affreteur/transporteur</h5>
+                            </div>
+                            <div class="price-container d-flex align-items-end justify-content-center">
+                                <h4 class="h1"><span class="currency">0&nbsp;</span>fcfa</h4><span class="period">/ mois</span>
+                            </div>
+                            <ul class="list-unstyled text-left">
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Notification en temps réel.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Possibilité de poster des offres.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Recherche élargie .</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Espace de présentation entreprise.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;3 camions gratuits.</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;Incription illimitté camions</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;MAJ trajet vehicule en temps réel.</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;Acces aux annuairex entreprises</li>
+                                <li><i class="fa fa-close" style="color:#a71d2a;"></i>&nbsp;Choix type abonnement</li>
+                            </ul><a href="{{ path('create_compte') }}" class="btn btn-template-outlined">Créer compte</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="package">
+                            <div class="package-header bg-primary color-white">
+                                <h5>Affreteur/transporteur</h5>
+                            </div>
+                            <div class="price-container d-flex align-items-end justify-content-center">
+                                <h4 class="h1"><span class="currency">XXXX&nbsp;</span>fcfa</h4><span class="period">/ mois</span>
+                            </div>
+                            <ul class="list-unstyled text-left">
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Notification en temps réel.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Possibilité de poster des offres.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Recherche élargie.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Espace de présentation entreprise.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;3 camions gratuits.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Incription illimitté camions</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;MAJ trajet vehicule en temps réel.</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Acces aux annuairex entreprises</li>
+                                <li><i class="fa fa-check-circle" style="color:#2C3E50;"></i>&nbsp;Choix type abonnement</li>
+                            </ul><a href="{{ path('create_compte') }}" class="btn btn-template-outlined">Créer compte</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section style="background: url(/build/img/14.jpg) center top no-repeat; background-size: cover;" class="bar no-mb color-white text-center bg-fixed relative-positioned">
+            <div class="dark-mask"></div>
+            <div class="container">
+                <div class="icon icon-outlined icon-lg"><i class="fa fa-globe"></i></div>
+                <h1>Fret Online</h1><br>
+                <p class="lead mb-0">Premier site de bourse de fret au Sénégal et pays voisins.</p><br>
+            </div>
+        </section>
+        <!-- GET IT-->
+        <div class="get-it">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 text-center p-3">
+                        <h3>Vous êtes courtier, affreteur ou transporteur ?</h3>
+                    </div>
+                    <div class="col-lg-4 text-center p-3">   <a href="#" class="btn btn-template-outlined-white">Inscrivez vous maintenant</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

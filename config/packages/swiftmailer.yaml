@@ -1,0 +1,4 @@
+swiftmailer:
+    transport:        gmail
+    username:         yaranagoreoumar@gmail.com
+    password:         yara2018

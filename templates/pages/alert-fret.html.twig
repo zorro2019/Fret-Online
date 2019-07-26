@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Alerte frêt' %}
+
+{% block slider '' %}
+
+{% block body %}
+    <div id="all">
+        <!-- Top bar-->
+        <div class="top-bar">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-6 d-md-block d-none">
+                        <p>Contacts&nbsp;<a class="text-white" href="tel:#">+221778213119</a> ou <a class="text-white"
+                                                                                                    href="mailto:#">contact.fret-Online@gmail.com</a>.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-md-end justify-content-between">
+                            <ul class="list-inline contact-info d-block d-md-none">
+                                <li class="list-inline-item"><a href="tel:#"><i class="fa fa-phone"></i></a></li>
+                                <li class="list-inline-item"><a href="mailto:#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                            <div class="login">
+                                {% if app.user == false %}
+                                    <a href="{{ path('login') }}" class="login-btn"><i class="fa fa-sign-in"></i><span
+                                                class="d-none d-md-inline-block">Se connecter</span></a>
+                                {% endif %}
+                                {% if app.user == false %}
+                                    <a href="{{ path('create_compte') }}" class="signup-btn"><i
+                                                class="fa fa-user"></i><span class="d-none d-md-inline-block">Créer un compte</span></a>
+                                {% endif %}
+                                {% if app.user %}
+                                    <a href="{{ path('user_espace') }}" class="login-btn"><i
+                                                class="fa fa-user"></i><span
+                                                class="d-none d-md-inline-block">Mon espace</span></a>
+                                {% endif %}
+                                {% if app.user %}
+                                    <a href="{{ path('logout') }}" class="login-btn"><i
+                                                class="fa fa-sign-out-alt"></i><span class="d-none d-md-inline-block">Se deconnecter</span></a>
+                                {% endif %}
+                            </div>
+                            <ul class="social-custom list-inline">
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top bar end-->
+        <!-- Navbar Start-->
+        <header class="nav-holder make-sticky">
+            <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+                <div class="container"><a href="{{ path('home') }}" class="navbar-brand home">
+                        <h2 class="d-none d-md-inline-block"><br>Frêt Online</h2>
+                    </a>
+                    <button type="button" data-toggle="collapse" data-target="#navigation"
+                            class="navbar-toggler btn-template-outlined"><span
+                                class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
+                    <div id="navigation" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item nav_link ">
+                                <a class="nav-link" href="{{ path('home') }}">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('fret.direct') }}">Fret en direct</a>
+                            </li>
+                            <li class="nav-item nav_link nav_link_active">
+                                <a class="nav-link lnk " href="{{ path('alert.fret') }}">Alert fret</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('faq') }}">Comment ça marche ?</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('contact') }}">Contact</a>
+                            </li>
+                            <!-- ========== Contact dropdown end ==================-->
+                        </ul>
+                    </div>
+                    <div id="search" class="collapse clearfix">
+                        <form role="search" class="navbar-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search" class="form-control"><span
+                                        class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Navbar End-->
+        <div id="heading-breadcrumbs" style="background-image: url('/build/img/15.jpg')">
+            <div class="container">
+                <div class="row d-flex align-items-center flex-wrap">
+                    <div class="col-md-7">
+                        <h1 class="font-weight-bold text-primary"><i class="fa fa-angle-right">&nbsp;Alert frêt</i></h1>
+                    </div>
+                    <div class="col-md-5">
+                        <ul class="breadcrumb d-flex justify-content-end">
+                            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Alert frêt</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="margin-top: 60px;">
+            <div class="heading">
+                <h3>Espace alerte frêt</h3>
+                <div class="pull-right d-inline-block">
+                    <div class="float-right ml-2"><button class=" btn btn-primary">Rechercher</button></div>
+                    <div class="float-left"><input type="text" class="form-control" placeholder="faites une recherche"></div>
+                </div>
+            </div>
+            <div class="row col-md-12">
+                <div class="card col-md-8 mt-3">
+                    <div class="mb-3"></div>
+                    {% for message in listePagine %}
+                        <div class="pull-left ">
+                            <a href="#">
+                                {% if message.idAbonne.file != null %}
+                                    <img class="media-object img-circle"
+                                         src="{{ vich_uploader_asset(message.idAbonne, 'imageProfil') }}" width="50px"
+                                         height="50px" style="margin-right:8px; margin-top:-5px;">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <h4><a href="#" style="text-decoration:none;"><strong>{{ message.idAbonne.nom }}</strong></a> –
+                            <small>
+                                <small><a href="#" style="text-decoration:none; color:grey;"><i><i
+                                                    class="fa fa-clock-o"
+                                                    aria-hidden="true"></i>{{ message.createAt.format('d/m/y h:m:s') }}
+                                        </i></a>
+                                </small>
+                            </small>
+                        </h4>
+                        <span>
+                    </span>
+                        <hr>
+                        <div class="post-content">
+                            <p><i class="fa fa-angle-right"></i><strong> Titre </strong>: {{ message.title }}</p>
+                            <p>{{ message.extrait }}... <a class="text-decoration-none" href="{{ path('read.alert',{id:message.id}) }}">Lire la suite</a></p>
+                        </div>
+                        <hr>
+                        <div>
+                            <div class="pull-right btn-group-xs">
+                                <a class="btn btn-default btn-xs"><i class="fa fa-comment"
+                                                                     aria-hidden="true"></i> Comment</a>
+                            </div>
+                            <div class="pull-left">
+                                <p class="text-muted" style="margin-left:5px;"><i class="fa fa-globe"
+                                                                                  aria-hidden="true"></i> Public
+                                </p>
+                            </div>
+                            <br>
+                        </div>
+                        <hr>
+                        <div class="media">
+                            {% if app.user %}
+                                <div class="pull-left">
+                                    <a href="#">
+                                        <img class="media-object img-circle"
+                                             src="{{ vich_uploader_asset(user, 'imageProfil') }}" width="35px"
+                                             height="35px" style="margin-left:3px; margin-right:-5px;">
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="media-body">
+                                <textarea class="form-control" rows="1" size="50" placeholder="Comment"></textarea>
+                            </div>
+                            <div class="pull-right ml-4">
+                                <button class="btn btn-primary" type="submit">send</button>
+                            </div>
+                        </div>
+                        <hr style="background-color: black" class="mt-5 mb-5">
+                    {% endfor %}
+                    {% if listePagine.getTotalItemCount > 3 %}
+                        <div class="text-center mb-5">
+                            {{ knp_pagination_render(listePagine) }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if app.user != null %}
+                    <div class="card col-md-4 mt-3 border-0">
+                        <form action="{{ path('alert.fret') }}" method="post">
+                        <div class="mb-3"></div>
+                        <div class="heading"><h3>Créer une alerte</h3></div>
+                        <div>
+                            <div class="form-group">
+                                <label for="">Titre</label>
+                                <input type="text" class="form-control" name="titre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Message</label>
+                                <textarea name="message" id="" cols="30" rows="4" class="form-control" required minlength="50"></textarea>
+                            </div>
+                            <div class="pull-right ml-4">
+                                <button class="btn btn-primary" type="submit" name="valider">send</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

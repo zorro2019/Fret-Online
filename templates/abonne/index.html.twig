@@ -1,0 +1,397 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Espace' %}
+
+{% block slider '' %}
+
+{% block body %}
+    <div id="all">
+        <!-- Top bar-->
+        <div class="top-bar">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-6 d-md-block d-none">
+                        <p>Contacts&nbsp;<a class="text-white" href="tel:#">+221778213119</a> ou <a class="text-white" href="mailto:#">contact.fret-Online@gmail.com</a>.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-md-end justify-content-between">
+                            <ul class="list-inline contact-info d-block d-md-none">
+                                <li class="list-inline-item"><a href="tel:#"><i class="fa fa-phone"></i></a></li>
+                                <li class="list-inline-item"><a href="mailto:#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                            <div class="login">
+                                {% if app.user == false %}
+                                    <a href="{{ path('login') }}" class="login-btn"><i class="fa fa-sign-in"></i><span class="d-none d-md-inline-block">Se connecter</span></a>
+                                {% endif %}
+                                {% if app.user == false %}
+                                    <a href="{{ path('create_compte') }}" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">Créer un compte</span></a>
+                                {% endif %}
+                                {% if app.user  %}
+                                    <a href="{{ path('user_espace') }}" class="login-btn">Mon Espace &nbsp;<i class="fa fa-user-o"></i></a>
+                                {% endif %}
+                                {% if app.user  %}
+                                    <a href="{{ path('logout') }}" class="login-btn">Déconnection&nbsp;&nbsp;<i class="fa fa-sign-out"></i></a>
+                                {% endif %}
+                            </div>
+                            <ul class="social-custom list-inline">
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top bar end-->
+        <!-- Navbar Start-->
+        <header class="nav-holder make-sticky">
+            <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+                <div class="container"><a href="{{ path('home') }}" class="navbar-brand home">
+                        <h2 class="d-none d-md-inline-block"><br>Frêt Online</h2>
+                    </a>
+                    <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
+                    <div id="navigation" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item nav_link nav_link_active">
+                                <a class="nav-link active lnk" href="{{ path('home') }}">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('fret.direct') }}">Fret en direct</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('alert.fret') }}">Alert fret</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('faq') }}">Comment ça marche ?</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('contact') }}">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="search" class="collapse clearfix">
+                        <form role="search" class="navbar-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search" class="form-control"><span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Navbar End-->
+        <div id="heading-breadcrumbs">
+            <div class="container">
+                <div class="row d-flex align-items-center flex-wrap">
+                    <div class="col-md-7">
+                        <h1 class="font-weight-bold text-primary"><i class="fa fa-angle-right">&nbsp; Mon espace</i></h1>
+                    </div>
+                    <div class="col-md-5">
+                        <ul class="breadcrumb d-flex justify-content-end">
+                            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Mon espace</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div class="offset-md-1 col-md-10 bg-gray-dark">
+                {% for message in app.flashes('success') %}
+                    <p class="text-center alert alert-success">{{ message }}</p>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="card col-md-3 border-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            {% if user.file != null %}
+                                <img class="card-img profile-image" width="300px" height="200px;" src="{{ vich_uploader_asset(user, 'imageProfil') }}" alt="">
+                            {% endif %}
+                            {% if user.file == null %}
+                                <img class="card-img profile-image" width="300px" height="200px;" src="/build/img/default_user.png" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="card-text">
+                            <hr class="bg-primary">
+                            <p>
+                                <strong>
+                                    <span class="small font-weight-bold text-uppercase">{{ user.nom }}</span>
+                                    {% if user.typeAbonne == 1 %}
+                                        Affreteur/courtier
+                                    {% endif %}
+                                    {% if user.typeAbonne == 2 %}
+                                        Transporteur
+                                        {% if  user.idEntreprise != null %}
+                                            chez {{ user.idEntreprise.nom }}
+                                        {% endif %}
+                                    {% endif %}
+                                </strong>
+                            </p>
+                            <hr class="bg-primary">
+                            <h3><strong>Mes liens</strong></h3>
+                            <hr class="bg-primary">
+                            <ul class="nav-list">
+                                {% if user.typeAbonne == 2 %}
+                                    <li>
+                                        <h5>
+                                            <a href="{{ path('create.vehicule') }}"><i class="fa fa-truck"></i>&nbsp;Gestion Camions</a>
+                                        </h5>
+                                    </li>
+                                    <hr class="bg-primary">
+                                {% endif %}
+                                <li>
+                                    <h5>
+                                        <a href="{{ path('alert.fret') }}"><i class="fa fa-bell"></i>&nbsp;Publication</a>
+                                    </h5>
+                                </li>
+                                <hr class="bg-primary">
+                                <li>
+                                    <h5>
+                                        <a href="{{ path('fret.direct') }}"><i class="fa fa-search"></i>&nbsp;Fret en direct</a>
+                                    </h5>
+                                </li>
+                                <hr class="bg-primary">
+                                <li>
+                                    <h5>
+                                        <a href="{{ path('alerte') }}"><i class="fa fa-comment-o"></i>&nbsp;<span class="badge badge-danger">{{ total }}</span>&nbsp;Alerte frêt</a>
+                                    </h5>
+                                </li>
+                                <hr class="bg-primary">
+                                <li>
+                                    <h5>
+                                        <a href="{{ path('abonnement') }}" ><i class="fa fa-credit-card"></i>&nbsp;S'abonner</a>
+                                    </h5>
+                                </li>
+
+                                {% if user.idEntreprise == null %}<hr class="bg-primary">
+                                    <li>
+                                        <h5>
+                                            <a href="{{ path('abonne.create.entreprise') }}" ><i class="fa fa-briefcase"></i>&nbsp;Ajouter entreprise</a>
+                                        </h5>
+                                    </li>
+                                {% endif %}
+                                <hr class="bg-primary">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card border-primary">
+                        <div class="card-body">
+                     <span>
+                        <h3 class="card-title pull-left text-primary"><small>{{ user.email }}</small> <i
+                                    class="fa fa-check text-primary" aria-hidden="true" data-toggle="tooltip"
+                                    data-placement="bottom" title="Vous êtes connecté"></i></h3>
+                    </span>
+                            <br><br>
+                            <hr class="bg-primary">
+                            <span class="pull-left">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                                       aria-controls="info" aria-selected="true"><i
+                                                class="fa fa-user"></i> Mes Infos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="post-tab" data-toggle="tab" href="#post" role="tab"
+                                       aria-controls="profile" aria-selected="false"><i class="fa fa-envelope-o"></i>&nbsp;<span class="badge badge-danger">{{ user.nbreMessageInread }}</span> Publications
+                                    </a>
+                                </li>
+                                {% if user.typeAbonne == 2 %}
+                                    <li class="nav-item">
+                                    <a class="nav-link" id="trajet-tab" data-toggle="tab" href="#trajet" role="tab"
+                                       aria-controls="trajet" aria-selected="false"><i
+                                                class="fa fa-truck"></i> Trajet endirect</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </span>
+                            <span class="pull-right text-primary">
+                        <a href="{{ path('abonnes.edit') }}" class="btn btn-primary" style="text-decoration:none;">~&nbsp;<i class="fa fa-lg fa-wrench"
+                                                                                                                          aria-hidden="true"
+                                                                                                                          data-toggle="tooltip"
+                                                                                                                          data-placement="bottom"
+                                                                                                                          title="Mention"></i>&nbsp;EDITER PROFIL&nbsp;~</a>
+                    </span>
+                        </div>
+                    </div>
+                    <div class="card border-primary tab-content profile-tab mt-5" id="myTabContent">
+                        <div class="tab-pane fade show active mt-2 mb-2 ml-2 mr-2" id="info" role="tabpanel"
+                             aria-labelledby="info-tab">
+                            <div class="card float-left mt-1 mb-1 col-md-6 border-left-0 border-bottom-0 border-top-0 border-primary">
+                                <div class="card-body" style="width: 100%;">
+                                    <h3 class="font-weight-bold">Mes infos</h3>
+                                    <div class="row" style="width: 100%;">
+                                        <p class="small"><i class="fa fa-pencil-square"></i>&nbsp;Nom&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ user.nom }}</p>
+                                    </div>
+                                    <div class="row" style="width: 100%;">
+                                        <p class="small"><i class="fa fa-pencil-square"></i>&nbsp;Prenom :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ user.prenom }}</p>
+                                    </div>
+                                    <div class="row" style="width: 100%;">
+                                        <p class="small"><i class="fa fa-mail-reply-all"></i>&nbsp;Email :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ user.email }}</p>
+                                    </div>
+                                    <div class="row" style="width: 100%;">
+                                        <p class="small"><i class="fa fa-phone"></i>&nbsp;Tel :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ user.telephone }}</p>
+                                    </div>
+                                    <div class="row" style="width: 100%;">
+                                        <p class="small"><i class="fa fa-briefcase"></i>&nbsp;Profession :&nbsp;&nbsp;&nbsp;&nbsp;
+                                            {% if user.typeAbonne == 1 %}
+                                                Affreteur/Courtier
+                                            {% endif %}
+                                            {% if user.typeAbonne == 2 %}
+                                                Transporteur/Affreteur
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <p><i class="fa fa-clock-o"></i>&nbsp;Créé le&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ user.createdAt.format('d/m/y h:m:s') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if user.idEntreprise != null %}
+                                <div class="card float-right mt-1 mb-1 col-md-6 border-0">
+                                    <div class="card-body">
+                                        <h3 class="font-weight-bold">Entreprise</h3>
+                                        <div class="row">
+
+                                            <p class="small"><i class="fa fa-pencil-square"></i>&nbsp;Nom : {{ user.idEntreprise.nom }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="small"><i class="fa fa-users"></i>&nbsp;Nbre user : {{ user.idEntreprise.nbreAbonne }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="small"><i class="fa fa-address-book-o"></i>&nbsp;Adresse : {{ user.idEntreprise.adresse }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="small"><i class="fa fa-phone"></i>&nbsp;Tel : {{ user.idEntreprise.tel }}</p>
+                                        </div>
+                                        <div class="row text-center">
+                                            <p class="small text-center" ><a class="text-decoration-none text-center" href="{{ path('entreprise.show',{id:user.idEntreprise.id}) }}">Voir entreprise</a></p>
+                                            <br><br>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="tab-pane fade mt-2 mb-2 ml-2 mr-2" id="post" role="tabpanel"
+                             aria-labelledby="post-tab">
+                            <div class="card-title mt-3 mb-5"><h3>MES NOTIFICATIONS<span class="text-danger">({{ user.nbreMessageInread }})</span></h3></div>
+                            {% for message in messages %}
+                                <div class="pull-left">
+                                    <a href="#">
+                                        <img class="media-object img-circle" src="{{ vich_uploader_asset(message.idMessage.idAbonne, 'imageProfil') }}" width="50px"
+                                             height="50px" style="margin-right:8px; margin-top:-5px;">
+                                    </a>
+                                </div>
+                                <h4><a href="#" style="text-decoration:none;"><strong>{{ message.idMessage.idAbonne.nom }}</strong></a> –
+                                    <small>
+                                        <small><a href="#" style="text-decoration:none; color:grey;"><i><i
+                                                            class="fa fa-clock-o" aria-hidden="true"></i>{{ message.idMessage.createAt.format('d/m/y h:m:s') }}</i></a>
+                                        </small>
+                                    </small>
+                                </h4>
+                                <span>
+                    </span>
+                                <hr class="bg-primary">
+                                <div class="post-content"><br>
+                                    <h5>Titre <i class="fa fa-angle-right"></i> {{ message.idMessage.title }}</h5>
+                                    <p>{{ message.idMessage.contenu }} ... <a class="text-decoration-none" href="{{ path('read.alert',{id:message.idMessage.id}) }}">Lire la suite</a></p>
+                                </div>
+                                <hr class="bg-primary">
+                                <div>
+                                    <div class="pull-right btn-group-xs">
+                                        <a class="btn btn-default btn-xs"><i class="fa fa-comment"
+                                                                             aria-hidden="true"></i> Comment</a>
+                                    </div>
+                                    <div class="pull-left">
+                                        <p class="text-muted" style="margin-left:5px;"><i class="fa fa-globe"
+                                                                                          aria-hidden="true"></i> Public
+                                        </p>
+                                    </div>
+                                    <br>
+                                </div>
+                                <hr class="bg-primary">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <a href="#">
+                                            <img class="media-object img-circle" src="{{ vich_uploader_asset(user, 'imageProfil') }}" width="35px"
+                                                 height="35px" style="margin-left:3px; margin-right:-5px;">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <textarea class="form-control" rows="1" size="50" placeholder="Comment"></textarea>
+                                    </div>
+                                    <div class="pull-right ml-4">
+                                        <button class="btn btn-primary" type="submit">send</button>
+                                    </div>
+                                </div>
+                                <hr class="mt-5 mb-5">
+                            {% endfor %}
+                            <p class="text-center"><a class="text-decoration-none" href="{{ path('alert.fret') }}">Voir plus (anciens)</a></p>
+                        </div>
+                        <div class="tab-pane fade show mt-2 mb-2 ml-2 mr-2" id="trajet" role="tabpanel"
+                             aria-labelledby="trajet-tab">
+                            <table class="table tabe-streped" id="accordion" role="tablist">
+                                <tr>
+                                    <th style="background-color: rgba(255,214,43,0.27);">Detail</th>
+                                    <th style="background-color: rgba(254,168,255,0.27);">Matricule</th>
+                                    <th style="background-color: rgba(126,209,255,0.27);">Type Vehicule</th>
+                                    <th style="background-color: rgba(255,202,34,0.27);">Ville</th>
+                                    <th style="background-color: rgba(195,255,146,0.27)">Quantite</th>
+                                    <th style="background-color: rgba(255,189,242,0.27);">Date</th>
+                                </tr>
+                                {% for vh in user.listeVehicule %}
+                                    {% for vg in vh.voyage  %}
+                                        {% if vg.status == 1 %}
+                                            {% for dt in vg.listeDetailVoyage %}
+                                                {% if dt.position == 1 %}
+                                                    <tr>
+                                                        <td class="text-center" id="headingOne" role="tab" style="background-color:rgba(255,81,46,0.14);width: 2px;">
+                                                            <a data-toggle="collapse" href="#td{{ dt.id }}" aria-expanded="true" aria-controls="td{{ dt.id }}">
+                                                                <i style="color: green;font-size: 20px;" class="fa fa-plus-circle"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td style="background-color:rgba(156,255,80,0.22);">{{ dt.idVoyage.idVehicule.matricule }}</td>
+                                                        <td style="background-color: rgba(80,255,65,0.14);">
+                                                            {% if dt.idVoyage.idVehicule.typeVehicule != null %}
+                                                                {{ dt.idVoyage.idVehicule.typeVehicule.libelle }}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td style="background-color: rgba(156,255,80,0.14);">{{ dt.ville }}</td>
+                                                        <td style="background-color: rgba(255,57,254,0.18);">{{ dt.idVoyage.quantiteDetail }}</td>
+                                                        <td style="background-color:rgba(156,255,80,0.22);">{{ dt.dateDepart.format('d/m/y') }}</td>
+                                                    </tr>
+                                                    <tr id="td{{ dt.id }}" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" class="collapse">
+                                                        <td style="background-color: rgba(255,235,244,0.18)" colspan="5">
+                                                            <p>
+                                                                Cet vehicule a commencé son voyage le {{ dt.idVoyage.debutAt.format('d/m/y') }} en partant de {{ dt.idVoyage.villedepart }} à destination de {{ dt.idVoyage.villearrive }}. Il transporte du {{ dt.idVoyage.produits }}
+                                                                Il se trouve actuellement à {{ dt.ville }} avec une charge de {{ dt.idVoyage.quantiteDetail }} tonnes.
+                                                            </p>
+                                                            <span class="text-bold text-dark pull-left">Information sur le chauffeur : <br>Nom : {{ dt.idVoyage.idChauffeur.nom }}
+                                                                <br>
+                                                            Tel : {{ dt.idVoyage.idChauffeur.Tel }}
+                                                            </span>
+                                                            <span class="text-bold text-dark pull-right">Information sur le transporteur : <br>Nom : {{ dt.idVoyage.idVehicule.idAbonne.nom }}
+                                                                <br>
+                                                                Tel : {{ dt.idVoyage.idVehicule.idAbonne.telephone }}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}

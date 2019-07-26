@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+    <a class="navbar-brand lnk" href="{{ path('home') }}">Fret-Online</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item nav_link">
+                <a class="nav-link lnk" href="{{ path('home') }}">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item nav_link nav_link_active">
+                <a class="nav-link active lnk" href="{{ path('fret.direct') }}">Fret en direct</a>
+            </li>
+            <li class="nav-item nav_link">
+                <a class="nav-link lnk" href="{{ path('alert.fret') }}">Alert fret</a>
+            </li>
+            <li class="nav-item nav_link">
+                <a class="nav-link lnk" href="{{ path('faq') }}">Comment ça marche ?</a>
+            </li>
+            <li class="nav-item nav_link">
+                <a class="nav-link lnk" href="{{ path('contact') }}">Contact</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav text-right">
+            <li class="nav-item lnk nav_link">
+                {% if app.user == false %}
+                    <a href="{{ path('login') }}" class="nav-link">Se connecter&nbsp;&nbsp;<i class="fa fa-sign-in"></i></a>
+                {% endif %}
+            </li>
+            <li class="nav-item lnk nav_link">
+                {% if app.user  %}
+                    <a href="{{ path('user_espace') }}" class="nav-link">Mon Espace &nbsp;&nbsp;<i class="fa fa-user-o"></i></a>
+                {% endif %}
+            </li>
+            <li class="nav-item lnk nav_link">
+                {% if app.user  %}
+                    <a href="{{ path('logout') }}" class="nav-link">Déconnection&nbsp;&nbsp;<i class="fa fa-sign-out"></i></a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>

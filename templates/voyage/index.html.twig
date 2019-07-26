@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Vehicule' %}
+{% block slider '' %}
+{% block body %}
+    <div class="jumbotron">
+        <div class="col-md-3 mt-4">
+            <h3>Gestion Vehicule</h3>
+            <div class="progress mb-4">
+                <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="50"
+                     aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <div class="container">
+            {{ form_start(form) }}
+            <div class="offset-md-1 col-md-10">
+                <div class=" ">
+                    {{ form_rest(form) }}
+                    <button type="submit" class="btn btn-primary btn-labeled pull-right">Valider&nbsp;<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

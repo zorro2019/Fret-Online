@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Login' %}
+
+{% block slider '' %}
+
+{% block body %}
+    <div id="all">
+        <!-- Top bar-->
+        <div class="top-bar">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-6 d-md-block d-none">
+                        <p>Contacts&nbsp;<a class="text-white" href="tel:#">+221778213119</a> ou <a class="text-white" href="mailto:#">contact.fret-Online@gmail.com</a>.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-md-end justify-content-between">
+                            <ul class="list-inline contact-info d-block d-md-none">
+                                <li class="list-inline-item"><a href="tel:#"><i class="fa fa-phone"></i></a></li>
+                                <li class="list-inline-item"><a href="mailto:#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                            <div class="login">
+                                {% if app.user == false %}
+                                    <a href="{{ path('login') }}" class="login-btn"><i class="fa fa-sign-in"></i><span class="d-none d-md-inline-block">Se connecter</span></a>
+                                {% endif %}
+                                {% if app.user == false %}
+                                    <a href="{{ path('create_compte') }}" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">Créer un compte</span></a>
+                                {% endif %}
+                            </div>
+                            <ul class="social-custom list-inline">
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top bar end-->
+        <!-- Navbar Start-->
+        <header class="nav-holder make-sticky">
+            <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+                <div class="container"><a href="{{ path('home') }}" class="navbar-brand home">
+                        <h2 class="d-none d-md-inline-block"><br>Frêt Online</h2>
+                    </a>
+                    <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
+                    <div id="navigation" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item nav_link nav_link_active">
+                                <a class="nav-link active lnk" href="{{ path('home') }}">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('fret.direct') }}">Fret en direct</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('alert.fret') }}">Alert fret</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('faq') }}">Comment ça marche ?</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('contact') }}">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="search" class="collapse clearfix">
+                        <form role="search" class="navbar-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search" class="form-control"><span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Navbar End-->
+        <div id="heading-breadcrumbs">
+            <div class="container">
+                <div class="row d-flex align-items-center flex-wrap">
+                    <div class="col-md-7">
+                        <h1 class="font-weight-bold text-primary"><i class="fa fa-angle-right">&nbsp; Se connecter</i></h1>
+                    </div>
+                    <div class="col-md-5">
+                        <ul class="breadcrumb d-flex justify-content-end">
+                            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Login</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="margin-top: 40px; margin-bottom: 80px;">
+            <div class="heading"><h4>Login</h4></div>
+            <div class="offset-md-3 col-md-6 mt-1 mb-4">
+                <div class="card border-primary ">
+                    {% if error %}
+                        <div class="alert alert-danger text-center">
+                            <p>identifiant ou mot de passe invalide</p>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <form action="{{ path('login') }}" class="form-group" method="post">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="_username" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="_password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <p class="text-center">
+                                    <button type="submit" class="btn btn-template-outlined"><i class="fa fa-sign-in"></i> Se connecter</button>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <p class="pull-right text-muted text-danger"><a class="text-danger" href="{{ path('changePassword') }}">Mot de passe oublié ?</a></p>
+                        <p class="text-center text-muted"><a href="{{ path('create_compte') }}"><strong>S'inscrire maintenant</strong></a>&nbsp;c'est simple et en moins d'une munite !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

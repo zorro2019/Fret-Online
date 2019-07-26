@@ -1,0 +1,319 @@
+{% extends 'base.html.twig' %}
+{% block title 'Admin' %}
+
+{% block slider '' %}
+{% block body %}
+    <!-- Top bar-->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <div class="col-md-6 d-md-block d-none">
+                    <p>Contacts&nbsp;<a class="text-white" href="tel:#">+221778213119</a> ou <a class="text-white"
+                                                                                                href="mailto:#">contact.fret-Online@gmail.com</a>.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-md-end justify-content-between">
+                        <ul class="list-inline contact-info d-block d-md-none">
+                            <li class="list-inline-item"><a href="tel:#"><i class="fa fa-phone"></i></a></li>
+                            <li class="list-inline-item"><a href="mailto:#"><i class="fa fa-envelope"></i></a></li>
+                        </ul>
+                        <div class="login">
+                            {% if app.user %}
+                                <a href="{{ path('admin.index') }}" class="login-btn"><i class="fa fa-user"></i><span
+                                            class="d-none d-md-inline-block">Mon espace</span></a>
+                            {% endif %}
+                            {% if app.user %}
+                                <a href="{{ path('logout') }}" class="login-btn"><i class="fa fa-sign-out-alt"></i><span
+                                            class="d-none d-md-inline-block">Se deconnecter</span></a>
+                            {% endif %}
+                        </div>
+                        <ul class="social-custom list-inline">
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-envelope"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top bar end-->
+    <!-- Navbar Start-->
+    <header class="nav-holder make-sticky">
+        <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+            <div class="container"><a href="{{ path('home') }}" class="navbar-brand home">
+                    <h2 class="d-none d-md-inline-block"><br>Frêt Online</h2>
+                </a>
+                <button type="button" data-toggle="collapse" data-target="#navigation"
+                        class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i
+                            class="fa fa-align-justify"></i></button>
+                <div id="navigation" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item nav_link nav_link_active">
+                            <a class="nav-link active lnk" href="{{ path('admin.index') }}">Admin<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item nav_link">
+                            <a class="nav-link lnk" href="{{ path('admin.index') }}">Gestion Vehicule</a>
+                        </li>
+                        <li class="nav-item nav_link">
+                            <a class="nav-link lnk" href="{{ path('admin.index') }}">Gestion Compte</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="search" class="collapse clearfix">
+                    <form role="search" class="navbar-form">
+                        <div class="input-group">
+                            <input type="text" placeholder="Search" class="form-control"><span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Navbar End-->
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row d-flex align-items-center flex-wrap">
+                <div class="col-md-7">
+                    <h1 class="font-weight-bold text-primary"><i class="fa fa-angle-right">&nbsp; Espace Admin</i></h1>
+                </div>
+                <div class="col-md-5">
+                    <ul class="breadcrumb d-flex justify-content-end">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">admin</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="container">
+            <section id="main-content">
+                <section class="wrapper site-min-height">
+                    <div class="heading">
+                        <h3>Profil</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row content-panel">
+                                <div class="col-md-4 profile-text mt mb centered">
+                                    <div class="right-divider hidden-sm hidden-xs text-center">
+                                        <h4>{{ nbreAbonne }}</h4>
+                                        <h6>Utilisateurs</h6>
+                                        <h4>{{ nbreEntreprise }}</h4>
+                                        <h6>Entreprises</h6>
+                                        <h4>{{ nbreVehicule }}</h4>
+                                        <h6>Vehicules</h6>
+                                    </div>
+                                </div>
+                                <!-- /col-md-4 -->
+                                <div class="col-md-4 profile-text">
+                                    <h3>{{ user.nom }}</h3>
+                                    <h6>Administrateur</h6>
+                                    <span class="text-small" style="size: 3px;">Cette partie permet d'enregistrer, modifier ou supprimer les diiferents types (vehicules, abonnement et compte) et les assurances.   </span>
+                                    <br>
+                                    <p>
+                                        <button class="btn btn-primary mt-4"><i class="fa fa-envelope"></i> Send Message
+                                        </button>
+                                    </p>
+                                </div>
+                                <!-- /col-md-4 -->
+                                <div class="col-md-4 centered">
+                                    <div class="profile-pic">
+                                        <p><img src="/build/img/10.jpg" class="img-circle"></p>
+                                        <p>
+                                            <button class="btn btn-primary"><i class="fa fa-check"></i> Follow</button>
+                                            <button class="btn btn-primary">Add</button>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- /col-md-4 -->
+                            </div>
+                            <!-- /row -->
+                        </div>
+                        <!-- /col-lg-12 -->
+                        <!-- /row -->
+                    </div>
+                    <!-- /container -->
+                </section>
+                <!-- /wrapper -->
+            </section>
+        </div>
+        <div class="container mt-5">
+            <section id="main-content">
+                <section class="wrapper site-min-height">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row content-panel">
+                                <div class="col-lg-3">
+                                    <!-- MENUS AND WIDGETS -->
+                                    <div class="panel panel-default sidebar-menu with-icons">
+                                        <div class="panel-heading">
+                                            <h3 class="h4 panel-title">Administration</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="nav nav-pills flex-column text-sm nav nav-tabs" id="myTab"
+                                                role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="info-tab" data-toggle="tab"
+                                                       href="#info" role="tab"
+                                                       aria-controls="info" aria-selected="true"><i
+                                                                class="fa fa-truck"></i> Type Vehicule </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="post-tab" data-toggle="tab" href="#post"
+                                                       role="tab"
+                                                       aria-controls="profile" aria-selected="false"><i
+                                                                class="fa fa-list-alt"></i>&nbsp;Abonnement
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="transport-tab" data-toggle="tab"
+                                                       href="#transport" role="tab"
+                                                       aria-controls="transport" aria-selected="false"><i
+                                                                class="fa fa-archive"></i> Type de Compte</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 tab-content profile-tab mt-5" id="myTabContent">
+                                    <div class="tab-pane fade show active mt-2 mb-2 ml-2 mr-2" id="info"
+                                         role="tabpanel"
+                                         aria-labelledby="info-tab">
+                                        <div class="heading">
+                                            <h5>Type de vehicue</h5>
+                                        </div>
+                                        <div class="small">
+                                            <div class="row">
+                                                <div class="offset-md-1 col-md-10">
+                                                    {% for message in app.flashes('success') %}
+                                                        <p class="small alert alert-success text-center">{{ message }}</p>
+                                                    {% endfor %}
+                                                    {% for message in app.flashes('warning') %}
+                                                        <p class="small alert alert-warning text-center">{{ message }}</p>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="float-left mt-1" style="width: 50%;">
+                                                <form action="{{ path('admin.index') }}" method="post">
+                                                    <div class="form-group">
+                                                        <label for="type">Type Vehicule </label>
+                                                        <input type="text" id="type" class="form-control" name="vehicule">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="desc">Description </label>
+                                                        <textarea id="desc" class="form-control" name="desc"></textarea>
+                                                    </div>
+                                                    <button name="btn-typeVehicule" class="pull-right btn btn-primary" type="submit">Valider</button>
+                                                </form>
+                                            </div>
+                                            <div class="ml-1 float-right" style="width: 48%;">
+                                                <h5>Les types</h5>
+                                                <table class="table table-streped font-weight-bold">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>Vehicule</th>
+                                                            <th>Delete</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for type in typeVehicule %}
+                                                            <tr class="text-center">
+                                                                <td>{{ type.libelle }}</td>
+                                                                <td>
+                                                                    <form action="{{ path('admin.delete',{id:type.id}) }}" method="post">
+                                                                        <button class="btn-danger" name="deleteVehicule" type="submit"><i class="fa fa-trash-o" onclick=" return confirm('Êtes-vous sûr ?')"></i></button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade mt-2 mb-2 ml-2 mr-2" id="post" role="tabpanel"
+                                         aria-labelledby="post-tab">
+                                        <div class="heading">
+                                            <h5>Type Abonnement</h5>
+                                        </div>
+                                        <div class="small">
+                                            <div class="float-left mt-1" style="width: 50%;">
+                                                <form action="{{ path('admin.index') }}" method="post">
+                                                    <div class="form-group">
+                                                        <label for="type">Type Abonnement </label>
+                                                        <input type="text" id="type" class="form-control" name="abonnement">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="montant">Montnat </label>
+                                                        <input type="number" id="montant" class="form-control" name="montant">
+                                                    </div>
+                                                    <button name="btn-typeAbonnement" class="pull-right btn btn-primary" type="submit">Valider</button>
+                                                </form>
+                                            </div>
+                                            <div class="float-right ml-1" style="width: 48%;">
+                                                <h5>Les types</h5>
+                                                <table class="table table-streped font-weight-bold">
+                                                    <thead>
+                                                    <tr class="text-center">
+                                                        <th>Vehicule</th>
+                                                        <th>Montant</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for type in typeAbonnement %}
+                                                        <tr class="text-center">
+                                                            <td>{{ type.typeAbonnement }}</td>
+                                                            <td>{{ type.montant }}</td>
+                                                            <td>
+                                                                <form action="{{ path('admin.delete',{id:type.id}) }}" method="post">
+                                                                    <button class="btn-danger" name="deleteAbonnement" type="submit"><i class="fa fa-trash-o" onclick=" return confirm('Êtes-vous sûr ?')"></i></button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade mt-2 mb-2 ml-2 mr-2" id="transport" role="tabpanel"
+                                         aria-labelledby="transport-tab">
+                                        <div class="heading"><h5>Type de compte</h5></div>
+                                        <div class="small">
+                                            <form action="#" method="post">
+                                                <div class="form-group">
+                                                    <label for="type">Type de compte</label>
+                                                    <input type="text" id="type" name="type" class="form-control">
+                                                </div>
+                                                <div class="form-group float-left">
+                                                    <label for="" class="font-weight-bold">Espace Vehicule</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <label for="type">Oui</label>
+                                                    <input type="radio" id="type" name="type" class="form-check-inline">
+                                                    <label for="type">Non</label>
+                                                    <input type="radio" id="type" name="type" class="form-check-inline">
+                                                </div>
+                                                <div class="form-group float-left">
+                                                    <label for="" class="font-weight-bold">Alerte Frêt</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <label for="type">Oui</label>
+                                                    <input type="radio" id="type" name="type" class="form-check-inline">
+                                                    <label for="type">Non</label>
+                                                    <input type="radio" id="type" name="type" class="form-check-inline">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </div>
+{% endblock %}

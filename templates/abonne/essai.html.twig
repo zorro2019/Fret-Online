@@ -1,0 +1,143 @@
+<div class="row">
+    <div class="card col-md-3">
+        <div class="card-body">
+            <div class="media">
+                {% if user.file != null %}
+                    <img class="card-img profile-image" width="300px" height="200px;" src="{{ vich_uploader_asset(user, 'imageProfil') }}" alt="">
+                {% endif %}
+            </div>
+            <div class="card-text">
+                <hr>
+                <p>
+                    <strong>
+                        <span class="small font-weight-bold text-uppercase">{{ user.nom }}</span>
+                        Administrateur
+                    </strong>
+                </p>
+                <hr>
+                <h3><strong>Mes liens</strong></h3>
+                <hr>
+                <ul class="nav-list">
+                    <li>
+                        <h5>
+                            <a href="{{ path('admin.vehicule') }}"><i class="fa fa-truck"></i>&nbsp;Gestion Camions</a>
+                        </h5>
+                    </li>
+                    <hr>
+                    <li>
+                        <h5>
+                            <a href="{{ path('admin.abonnement') }}" ><i class="fa fa-credit-card"></i>&nbsp;Gestion Abonnement</a>
+                        </h5>
+                    </li>
+                    <hr>
+                    <li>
+                        <h5>
+                            <a href="{{ path('admin.abonnes') }}" ><i class="fa fa-users"></i>&nbsp;Gestion Abonnés</a>
+                        </h5>
+                    </li>
+                    <hr>
+                    <li>
+                        <h5>
+                            <a href="{{ path('admin.compte') }}" ><i class="fa fa-address-card-o"></i>&nbsp;Gestion Compte</a>
+                        </h5>
+                    </li>
+                    <hr>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                     <span>
+                        <h3 class="card-title pull-left text-primary"><small>{{ user.email }}</small> <i
+                                    class="fa fa-check text-primary" aria-hidden="true" data-toggle="tooltip"
+                                    data-placement="bottom" title="Vous êtes connecté"></i></h3>
+                    </span>
+                <br><br>
+                <hr>
+                <span class="pull-left">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                                       aria-controls="info" aria-selected="true"><i
+                                                class="fa fa-user"></i> Mes Infos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="post-tab" data-toggle="tab" href="#post" role="tab"
+                                       aria-controls="profile" aria-selected="false"><i class="fa fa-envelope-o"></i>&nbsp;<span class="badge badge-danger">{{ user.nbreMessageInread }}</span> Message Utilisateur
+                                    </a>
+                                </li>
+                            </ul>
+                        </span>
+                <span class="pull-right text-primary">
+                        <a href="{{ path('abonnes.edit') }}" class="btn btn-primary" style="text-decoration:none;">~&nbsp;<i class="fa fa-lg fa-edit"
+                                                                                                                             aria-hidden="true"
+                                                                                                                             data-toggle="tooltip"
+                                                                                                                             data-placement="bottom"
+                                                                                                                             title="Mention"></i>&nbsp;EDITER PROFIL&nbsp;~</a>
+                    </span>
+            </div>
+        </div>
+        <div class="card tab-content profile-tab mt-5" id="myTabContent">
+            <div class="tab-pane fade show active mt-2 mb-2 ml-2 mr-2" id="info" role="tabpanel"
+                 aria-labelledby="info-tab">
+                <div class="card float-left mt-1 mb-1 col-md-6 border-left-0 border-bottom-0 border-top-0 border-primary">
+                    <div class="card-body">
+                        <h3 class="font-weight-bold">Mes infos</h3>
+                        <div class="row" style="width: 100%;">
+                            <p class="small"><i class="fa fa-pencil-square"></i>&nbsp;Nom&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ user.nom }}</p>
+                        </div>
+                        <div class="row" style="width: 100%;">
+                            <p class="small"><i class="fa fa-pencil-square"></i>&nbsp;Prenom :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ user.prenom }}</p>
+                        </div>
+                        <div class="row" style="width: 100%;">
+                            <p class="small"><i class="fa fa-mail-reply-all"></i>&nbsp;Email :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ user.email }}</p>
+                        </div>
+                        <div class="row" style="width: 100%;">
+                            <p class="small"><i class="fa fa-phone"></i>&nbsp;Tel :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ user.telephone }}</p>
+                        </div>
+                        <div class="row" style="width: 100%;">
+                            <p class="small"><i class="fa fa-briefcase"></i>&nbsp;Profession :&nbsp;&nbsp;&nbsp;&nbsp;
+                                {% if user.typeAbonne == 1 %}
+                                    Affreteur/Courtier
+                                {% endif %}
+                                {% if user.typeAbonne == 2 %}
+                                    Transporteur/Affreteur
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="row">
+                            <p><i class="fa fa-clock-o"></i>&nbsp;Créé le&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ user.createdAt.format('d/m/y h:m:s') }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% if user.idEntreprise != null %}
+                    <div class="card float-right mt-1 mb-1 col-md-6 border-0">
+                        <div class="card-body">
+                            <h3 class="font-weight-bold">Entreprise</h3>
+                            <div class="row">
+
+                                <p class="small"><i class="fa fa-pencil-square"></i>&nbsp;Nom : {{ user.idEntreprise.nom }}</p>
+                            </div>
+                            <div class="row">
+                                <p class="small"><i class="fa fa-users"></i>&nbsp;Nbre user : {{ user.idEntreprise.nbreAbonne }}</p>
+                            </div>
+                            <div class="row">
+                                <p class="small"><i class="fa fa-address-book-o"></i>&nbsp;Adresse : {{ user.idEntreprise.adresse }}</p>
+                            </div>
+                            <div class="row">
+                                <p class="small"><i class="fa fa-phone"></i>&nbsp;Tel : {{ user.idEntreprise.tel }}</p>
+                            </div>
+                            <div class="row text-center">
+                                <p class="small text-center" ><a class="text-decoration-none text-center" href="{{ path('entreprise.show',{id:user.idEntreprise.id}) }}">Voir entreprise</a></p>
+                                <br><br>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

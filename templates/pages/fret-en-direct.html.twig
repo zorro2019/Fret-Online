@@ -1,0 +1,572 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Frêt en direct' %}
+
+{% block slider '' %}
+
+{% block body %}
+    <div id="all">
+        <!-- Top bar-->
+        <div class="top-bar">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-6 d-md-block d-none">
+                        <p>Contacts&nbsp;<a class="text-white" href="tel:#">+221778213119</a> ou <a class="text-white"
+                                                                                                    href="mailto:#">contact.fret-Online@gmail.com</a>.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-md-end justify-content-between">
+                            <ul class="list-inline contact-info d-block d-md-none">
+                                <li class="list-inline-item"><a href="tel:#"><i class="fa fa-phone"></i></a></li>
+                                <li class="list-inline-item"><a href="mailto:#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                            <div class="login">
+                                {% if app.user == false %}
+                                    <a href="{{ path('login') }}" class="login-btn"><i class="fa fa-sign-in"></i><span
+                                                class="d-none d-md-inline-block">Se connecter</span></a>
+                                {% endif %}
+                                {% if app.user == false %}
+                                    <a href="{{ path('create_compte') }}" class="signup-btn"><i
+                                                class="fa fa-user"></i><span class="d-none d-md-inline-block">Créer un compte</span></a>
+                                {% endif %}
+                                {% if app.user %}
+                                    <a href="{{ path('user_espace') }}" class="login-btn"><i
+                                                class="fa fa-user"></i><span
+                                                class="d-none d-md-inline-block">Mon espace</span></a>
+                                {% endif %}
+                                {% if app.user %}
+                                    <a href="{{ path('logout') }}" class="login-btn"><i
+                                                class="fa fa-sign-out-alt"></i><span class="d-none d-md-inline-block">Se deconnecter</span></a>
+                                {% endif %}
+                            </div>
+                            <ul class="social-custom list-inline">
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top bar end-->
+        <!-- Navbar Start-->
+        <header class="nav-holder make-sticky">
+            <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+                <div class="container"><a href="{{ path('home') }}" class="navbar-brand home">
+                        <h2 class="d-none d-md-inline-block"><br>Frêt Online</h2>
+                    </a>
+                    <button type="button" data-toggle="collapse" data-target="#navigation"
+                            class="navbar-toggler btn-template-outlined"><span
+                                class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
+                    <div id="navigation" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item nav_link ">
+                                <a class="nav-link active lnk" href="{{ path('home') }}">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item nav_link nav_link_active">
+                                <a class="nav-link lnk" href="{{ path('fret.direct') }}">Fret en direct</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('alert.fret') }}">Alert fret</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('faq') }}">Comment ça marche ?</a>
+                            </li>
+                            <li class="nav-item nav_link">
+                                <a class="nav-link lnk" href="{{ path('contact') }}">Contact</a>
+                            </li>
+                            <!-- ========== Contact dropdown end ==================-->
+                        </ul>
+                    </div>
+                    <div id="search" class="collapse clearfix">
+                        <form role="search" class="navbar-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search" class="form-control"><span
+                                        class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Navbar End-->
+        {% include 'default/block-slider.html.twig' %}
+
+        <div class="container mb-5">
+            <div class="heading mt-5">
+                <h3>Recherche Avancée</h3>
+            </div>
+            <div class="card offset-md-1 col-md-10 mt-5 border-primary" style="margin-bottom: 40px;">
+                {{ form_start(form) }}
+                <div class="row mt-3">
+                    <div class="form-group col-md-3">
+                        <div>{{ form_widget(form.localite) }}</div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <select name="type" id="" class="form-control">
+                            {% for type in typeVheicule  %}
+                                <option value="{{ type.id }}">{{ type.libelle }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div>{{ form_errors(form.tonnage) }}</div>
+                        <div>{{ form_widget(form.tonnage) }}</div>
+                    </div>
+                    <div class="form-group col-md-3 text-center">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <div class="card offset-1 col-md-10">
+                {% if voyages != null %}
+                    <table class="table tabe-streped" id="accordion" role="tablist">
+                        <tr>
+                            <th style="background-color: rgba(255,214,43,0.27);">Detail</th>
+                            <th style="background-color: rgba(254,168,255,0.27);">Matricule</th>
+                            <th style="background-color: rgba(126,209,255,0.27);">Type Vehicule</th>
+                            <th style="background-color: rgba(255,202,34,0.27);">Ville</th>
+                            <th style="background-color: rgba(195,255,146,0.27)">Quantite</th>
+                            <th style="background-color: rgba(255,189,242,0.27);">Date</th>
+                        </tr>
+                        {% if search['submit'] == 0 %}
+                            {% for vg in voyages %}
+                                {% if vg.status == 1 %}
+                                    {% for dt in vg.listeDetailVoyage %}
+                                        {% if dt.position == 1 %}
+                                            <tr>
+                                                <td class="text-center" id="headingOne" role="tab"
+                                                    style="background-color:rgba(255,81,46,0.14);width: 2px;">
+                                                    <a data-toggle="collapse" href="#td{{ dt.id }}" aria-expanded="true"
+                                                       aria-controls="td{{ dt.id }}">
+                                                        <i style="color: green;font-size: 20px;"
+                                                           class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.idVoyage.idVehicule.matricule }}</td>
+                                                <td style="background-color: rgba(80,255,65,0.14);">
+                                                    {{ dt.idVoyage.idVehicule.typeVehicule.libelle }}
+                                                </td>
+                                                <td style="background-color: rgba(156,255,80,0.14);">{{ dt.ville }}</td>
+                                                <td style="background-color: rgba(255,57,254,0.18);">{{ dt.idVoyage.quantiteDetail }}</td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.dateDepart.format('d/m/y') }}</td>
+                                            </tr>
+                                            <tr id="td{{ dt.id }}" role="tabpanel" aria-labelledby="headingOne"
+                                                data-parent="#accordion" class="collapse">
+                                                <td style="background-color: rgba(255,235,244,0.18)" colspan="5">
+                                                    <p>
+                                                        Cet vehicule a commencé son voyage
+                                                        le {{ dt.idVoyage.debutAt.format('d/m/y') }} en partant
+                                                        de {{ dt.idVoyage.villedepart }} à destination
+                                                        de {{ dt.idVoyage.villearrive }}. Il transporte
+                                                        du {{ dt.idVoyage.produits }}
+                                                        Il se trouve actuellement à {{ dt.ville }} avec une charge
+                                                        de {{ dt.idVoyage.quantiteDetail }} tonnes.
+                                                    </p>
+                                                    <span class="text-bold text-warning pull-left">Information sur le chauffeur : <br>Nom : {{ dt.idVoyage.idChauffeur.nom }}
+                                                        <br>
+                                                            Tel : {{ dt.idVoyage.idChauffeur.Tel }}
+                                                            </span>
+                                                    <span class="ml-5 text-center"><a class="text-decoration-none" href="#"></a></span>
+                                                    <span class="text-bold text-warning pull-right">Information sur le transporteur : <br>Nom : {{ dt.idVoyage.idVehicule.idAbonne.nom }}
+                                                        <br>
+                                                                Tel : {{ dt.idVoyage.idVehicule.idAbonne.telephone }}
+                                                            </span>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if search['submit'] == 2 %}
+                            {% for vg in voyages %}
+                                {% if vg.status == 1 %}
+                                    {% for dt in vg.listeDetailVoyage %}
+                                        {% if dt.position == 1 and dt.idVoyage.quantiteDetail >= search['quant'] %}
+                                            <tr>
+                                                <td class="text-center" id="headingOne" role="tab"
+                                                    style="background-color:rgba(255,81,46,0.14);width: 2px;">
+                                                    <a data-toggle="collapse" href="#td{{ dt.id }}" aria-expanded="true"
+                                                       aria-controls="td{{ dt.id }}">
+                                                        <i style="color: green;font-size: 20px;"
+                                                           class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.idVoyage.idVehicule.matricule }}</td>
+                                                <td style="background-color: rgba(80,255,65,0.14);">
+                                                    {% if dt.idVoyage.idVehicule.typeVehicule == 1 %}
+                                                        Camion
+                                                    {% endif %}
+                                                    {% if dt.idVoyage.idVehicule.typeVehicule == 2 %}
+                                                        Citerne
+                                                    {% endif %}
+                                                    {% if dt.idVoyage.idVehicule.typeVehicule != null %}
+                                                        {{ dt.idVoyage.idVehicule.typeVehicule.libelle }}
+                                                    {% endif %}
+                                                </td>
+                                                <td style="background-color: rgba(156,255,80,0.14);">{{ dt.ville }}</td>
+                                                <td style="background-color: rgba(255,57,254,0.18);">{{ dt.idVoyage.quantiteDetail }}</td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.dateDepart.format('d/m/y') }}</td>
+                                            </tr>
+                                            <tr id="td{{ dt.id }}" role="tabpanel" aria-labelledby="headingOne"
+                                                data-parent="#accordion" class="collapse">
+                                                <td style="background-color: rgba(255,235,244,0.18)" colspan="5">
+                                                    <p>
+                                                        Cet vehicule a commencé son voyage
+                                                        le {{ dt.idVoyage.debutAt.format('d/m/y') }} en partant
+                                                        de {{ dt.idVoyage.villedepart }} à destination
+                                                        de {{ dt.idVoyage.villearrive }}. Il transporte
+                                                        du {{ dt.idVoyage.produits }}
+                                                        Il se trouve actuellement à {{ dt.ville }} avec une charge
+                                                        de {{ dt.idVoyage.quantiteDetail }} tonnes.
+                                                    </p>
+                                                    <span class="text-bold text-warning pull-left">Information sur le chauffeur : <br>Nom : {{ dt.idVoyage.idChauffeur.nom }}
+                                                        <br>
+                                                            Tel : {{ dt.idVoyage.idChauffeur.Tel }}
+                                                            </span>
+                                                    <span class="ml-5 text-center"><a class="text-decoration-none" href="#"></a></span>
+                                                    <span class="text-bold text-warning pull-right">Information sur le transporteur : <br>Nom : {{ dt.idVoyage.idVehicule.idAbonne.nom }}
+                                                        <br>
+                                                                Tel : {{ dt.idVoyage.idVehicule.idAbonne.telephone }}
+                                                            </span>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if search['submit'] == 3 %}
+                            {% for vg in voyages %}
+                                {% if vg.status == 1 %}
+                                    {% for dt in vg.listeDetailVoyage %}
+                                        {% if dt.position == 1 and dt.idVoyage.idVehicule.typeVehicule == ValSearch.typeVehicule %}
+                                            <tr>
+                                                <td class="text-center" id="headingOne" role="tab"
+                                                    style="background-color:rgba(255,81,46,0.14);width: 2px;">
+                                                    <a data-toggle="collapse" href="#td{{ dt.id }}" aria-expanded="true"
+                                                       aria-controls="td{{ dt.id }}">
+                                                        <i style="color: green;font-size: 20px;"
+                                                           class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.idVoyage.idVehicule.matricule }}</td>
+                                                <td style="background-color: rgba(80,255,65,0.14);">
+                                                    {% if dt.idVoyage.idVehicule.typeVehicule != null %}
+                                                        {{ dt.idVoyage.idVehicule.typeVehicule.libelle }}
+                                                    {% endif %}
+                                                </td>
+                                                <td style="background-color: rgba(156,255,80,0.14);">{{ dt.ville }}</td>
+                                                <td style="background-color: rgba(255,57,254,0.18);">{{ dt.idVoyage.quantiteDetail }}</td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.dateDepart.format('d/m/y') }}</td>
+                                            </tr>
+                                            <tr id="td{{ dt.id }}" role="tabpanel" aria-labelledby="headingOne"
+                                                data-parent="#accordion" class="collapse">
+                                                <td style="background-color: rgba(255,235,244,0.18)" colspan="5">
+                                                    <p>
+                                                        Cet vehicule a commencé son voyage
+                                                        le {{ dt.idVoyage.debutAt.format('d/m/y') }} en partant
+                                                        de {{ dt.idVoyage.villedepart }} à destination
+                                                        de {{ dt.idVoyage.villearrive }}. Il transporte
+                                                        du {{ dt.idVoyage.produits }}
+                                                        Il se trouve actuellement à {{ dt.ville }} avec une charge
+                                                        de {{ dt.idVoyage.quantiteDetail }} tonnes.
+                                                    </p>
+                                                    <span class="text-bold text-warning pull-left">Information sur le chauffeur : <br>Nom : {{ dt.idVoyage.idChauffeur.nom }}
+                                                        <br>
+                                                            Tel : {{ dt.idVoyage.idChauffeur.Tel }}
+                                                            </span>
+                                                    <span class="ml-5 text-center"><a class="text-decoration-none" href="#"><button class="ml-5 btn btn-primary">Contacter</button></a></span>
+                                                    <span class="text-bold text-warning pull-right">Information sur le transporteur : <br>Nom : {{ dt.idVoyage.idVehicule.idAbonne.nom }}
+                                                        <br>
+                                                                Tel : {{ dt.idVoyage.idVehicule.idAbonne.telephone }}
+                                                            </span>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if search['submit'] == 4 %}
+                            {% for vg in voyages %}
+                                {% if vg.status == 1 %}
+                                    {% for dt in vg.listeDetailVoyage %}
+                                        {% if dt.position == 1 and dt.idVoyage.idVehicule.typeVehicule == ValSearch.typeVehicule and dt.idVoyage.quantiteDetail >= search['quant'] %}
+                                            <tr>
+                                                <td class="text-center" id="headingOne" role="tab"
+                                                    style="background-color:rgba(255,81,46,0.14);width: 2px;">
+                                                    <a data-toggle="collapse" href="#td{{ dt.id }}" aria-expanded="true"
+                                                       aria-controls="td{{ dt.id }}">
+                                                        <i style="color: green;font-size: 20px;"
+                                                           class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.idVoyage.idVehicule.matricule }}</td>
+                                                <td style="background-color: rgba(80,255,65,0.14);">
+                                                    {% if dt.idVoyage.idVehicule.typeVehicule != null %}
+                                                        {{ dt.idVoyage.idVehicule.typeVehicule.libelle }}
+                                                    {% endif %}
+                                                </td>
+                                                <td style="background-color: rgba(156,255,80,0.14);">{{ dt.ville }}</td>
+                                                <td style="background-color: rgba(255,57,254,0.18);">{{ dt.idVoyage.quantiteDetail }}</td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.dateDepart.format('d/m/y') }}</td>
+                                            </tr>
+                                            <tr id="td{{ dt.id }}" role="tabpanel" aria-labelledby="headingOne"
+                                                data-parent="#accordion" class="collapse">
+                                                <td style="background-color: rgba(255,235,244,0.18)" colspan="5">
+                                                    <p>
+                                                        Cet vehicule a commencé son voyage
+                                                        le {{ dt.idVoyage.debutAt.format('d/m/y') }} en partant
+                                                        de {{ dt.idVoyage.villedepart }} à destination
+                                                        de {{ dt.idVoyage.villearrive }}. Il transporte
+                                                        du {{ dt.idVoyage.produits }}
+                                                        Il se trouve actuellement à {{ dt.ville }} avec une charge
+                                                        de {{ dt.idVoyage.quantiteDetail }} tonnes.
+                                                    </p>
+                                                    <span class="text-bold text-warning pull-left">Information sur le chauffeur : <br>Nom : {{ dt.idVoyage.idChauffeur.nom }}
+                                                        <br>
+                                                            Tel : {{ dt.idVoyage.idChauffeur.Tel }}
+                                                            </span>
+                                                    <span class="ml-5 text-center"><a class="text-decoration-none" href="#"><button class="ml-5 btn btn-primary">Contacter</button></a></span>
+                                                    <span class="text-bold text-warning pull-right">Information sur le transporteur : <br>Nom : {{ dt.idVoyage.idVehicule.idAbonne.nom }}
+                                                        <br>
+                                                                Tel : {{ dt.idVoyage.idVehicule.idAbonne.telephone }}
+                                                            </span>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if search['submit'] == 5 %}
+                            {% for vg in voyages %}
+                                {% if vg.status == 1 %}
+                                    {% for dt in vg.listeDetailVoyage %}
+                                        {% if dt.position == 1 and dt.ville == search['localite'] %}
+                                            <tr>
+                                                <td class="text-center" id="headingOne" role="tab"
+                                                    style="background-color:rgba(255,81,46,0.14);width: 2px;">
+                                                    <a data-toggle="collapse" href="#td{{ dt.id }}" aria-expanded="true"
+                                                       aria-controls="td{{ dt.id }}">
+                                                        <i style="color: green;font-size: 20px;"
+                                                           class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.idVoyage.idVehicule.matricule }}</td>
+                                                <td style="background-color: rgba(80,255,65,0.14);">
+                                                    {% if dt.idVoyage.idVehicule.typeVehicule != null %}
+                                                        {{ dt.idVoyage.idVehicule.typeVehicule.libelle }}
+                                                    {% endif %}
+                                                </td>
+                                                <td style="background-color: rgba(156,255,80,0.14);">{{ dt.ville }}</td>
+                                                <td style="background-color: rgba(255,57,254,0.18);">{{ dt.idVoyage.quantiteDetail }}</td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.dateDepart.format('d/m/y') }}</td>
+                                            </tr>
+                                            <tr id="td{{ dt.id }}" role="tabpanel" aria-labelledby="headingOne"
+                                                data-parent="#accordion" class="collapse">
+                                                <td style="background-color: rgba(255,235,244,0.18)" colspan="5">
+                                                    <p>
+                                                        Cet vehicule a commencé son voyage
+                                                        le {{ dt.idVoyage.debutAt.format('d/m/y') }} en partant
+                                                        de {{ dt.idVoyage.villedepart }} à destination
+                                                        de {{ dt.idVoyage.villearrive }}. Il transporte
+                                                        du {{ dt.idVoyage.produits }}
+                                                        Il se trouve actuellement à {{ dt.ville }} avec une charge
+                                                        de {{ dt.idVoyage.quantiteDetail }} tonnes.
+                                                    </p>
+                                                    <span class="text-bold text-warning pull-left">Information sur le chauffeur : <br>Nom : {{ dt.idVoyage.idChauffeur.nom }}
+                                                        <br>
+                                                            Tel : {{ dt.idVoyage.idChauffeur.Tel }}
+                                                            </span>
+                                                    <span class="ml-5 text-center"><a class="text-decoration-none" href="#"><button class="ml-5 btn btn-primary">Contacter</button></a></span>
+                                                    <span class="text-bold text-warning pull-right">Information sur le transporteur : <br>Nom : {{ dt.idVoyage.idVehicule.idAbonne.nom }}
+                                                        <br>
+                                                                Tel : {{ dt.idVoyage.idVehicule.idAbonne.telephone }}
+                                                            </span>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if search['submit'] == 6 %}
+                            {% for vg in voyages %}
+                                {% if vg.status == 1 %}
+                                    {% for dt in vg.listeDetailVoyage %}
+                                        {% if dt.position == 1 and dt.ville == search['localite'] and dt.idVoyage.quantiteDetail >= search['quant'] %}
+                                            <tr>
+                                                <td class="text-center" id="headingOne" role="tab"
+                                                    style="background-color:rgba(255,81,46,0.14);width: 2px;">
+                                                    <a data-toggle="collapse" href="#td{{ dt.id }}" aria-expanded="true"
+                                                       aria-controls="td{{ dt.id }}">
+                                                        <i style="color: green;font-size: 20px;"
+                                                           class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.idVoyage.idVehicule.matricule }}</td>
+                                                <td style="background-color: rgba(80,255,65,0.14);">
+                                                    {% if dt.idVoyage.idVehicule.typeVehicule != null %}
+                                                        {{ dt.idVoyage.idVehicule.typeVehicule.libelle }}
+                                                    {% endif %}
+                                                </td>
+                                                <td style="background-color: rgba(156,255,80,0.14);">{{ dt.ville }}</td>
+                                                <td style="background-color: rgba(255,57,254,0.18);">{{ dt.idVoyage.quantiteDetail }}</td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.dateDepart.format('d/m/y') }}</td>
+                                            </tr>
+                                            <tr id="td{{ dt.id }}" role="tabpanel" aria-labelledby="headingOne"
+                                                data-parent="#accordion" class="collapse">
+                                                <td style="background-color: rgba(255,235,244,0.18)" colspan="5">
+                                                    <p>
+                                                        Cet vehicule a commencé son voyage
+                                                        le {{ dt.idVoyage.debutAt.format('d/m/y') }} en partant
+                                                        de {{ dt.idVoyage.villedepart }} à destination
+                                                        de {{ dt.idVoyage.villearrive }}. Il transporte
+                                                        du {{ dt.idVoyage.produits }}
+                                                        Il se trouve actuellement à {{ dt.ville }} avec une charge
+                                                        de {{ dt.idVoyage.quantiteDetail }} tonnes.
+                                                    </p>
+                                                    <span class="text-bold text-warning pull-left">Information sur le chauffeur : <br>Nom : {{ dt.idVoyage.idChauffeur.nom }}
+                                                        <br>
+                                                            Tel : {{ dt.idVoyage.idChauffeur.Tel }}
+                                                            </span>
+                                                    <span class="ml-5 text-center"><a class="text-decoration-none" href="#"><button class="ml-5 btn btn-primary">Contacter</button></a></span>
+                                                    <span class="text-bold text-warning pull-right">Information sur le transporteur : <br>Nom : {{ dt.idVoyage.idVehicule.idAbonne.nom }}
+                                                        <br>
+                                                                Tel : {{ dt.idVoyage.idVehicule.idAbonne.telephone }}
+                                                            </span>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if search['submit'] == 7 %}
+                            {% for vg in voyages %}
+                                {% if vg.status == 1 %}
+                                    {% for dt in vg.listeDetailVoyage %}
+                                        {% if dt.position == 1 and dt.ville == search['localite'] and dt.idVoyage.idVehicule.typeVehicule == ValSearch.typeVehicule %}
+                                            <tr>
+                                                <td class="text-center" id="headingOne" role="tab"
+                                                    style="background-color:rgba(255,81,46,0.14);width: 2px;">
+                                                    <a data-toggle="collapse" href="#td{{ dt.id }}" aria-expanded="true"
+                                                       aria-controls="td{{ dt.id }}">
+                                                        <i style="color: green;font-size: 20px;"
+                                                           class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.idVoyage.idVehicule.matricule }}</td>
+                                                <td style="background-color: rgba(80,255,65,0.14);">
+                                                    {% if dt.idVoyage.idVehicule.typeVehicule != null %}
+                                                        {{ dt.idVoyage.idVehicule.typeVehicule.libelle }}
+                                                    {% endif %}
+                                                </td>
+                                                <td style="background-color: rgba(156,255,80,0.14);">{{ dt.ville }}</td>
+                                                <td style="background-color: rgba(255,57,254,0.18);">{{ dt.idVoyage.quantiteDetail }}</td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.dateDepart.format('d/m/y') }}</td>
+                                            </tr>
+                                            <tr id="td{{ dt.id }}" role="tabpanel" aria-labelledby="headingOne"
+                                                data-parent="#accordion" class="collapse">
+                                                <td style="background-color: rgba(255,235,244,0.18)" colspan="5">
+                                                    <p>
+                                                        Cet vehicule a commencé son voyage
+                                                        le {{ dt.idVoyage.debutAt.format('d/m/y') }} en partant
+                                                        de {{ dt.idVoyage.villedepart }} à destination
+                                                        de {{ dt.idVoyage.villearrive }}. Il transporte
+                                                        du {{ dt.idVoyage.produits }}
+                                                        Il se trouve actuellement à {{ dt.ville }} avec une charge
+                                                        de {{ dt.idVoyage.quantiteDetail }} tonnes.
+                                                    </p>
+                                                    <span class="text-bold text-warning pull-left">Information sur le chauffeur : <br>Nom : {{ dt.idVoyage.idChauffeur.nom }}
+                                                        <br>
+                                                            Tel : {{ dt.idVoyage.idChauffeur.Tel }}
+                                                            </span>
+                                                    <span class="ml-5 text-center"><a class="text-decoration-none" href="#"><button class="ml-5 btn btn-primary">Contacter</button></a></span>
+                                                    <span class="text-bold text-warning pull-right">Information sur le transporteur : <br>Nom : {{ dt.idVoyage.idVehicule.idAbonne.nom }}
+                                                        <br>
+                                                                Tel : {{ dt.idVoyage.idVehicule.idAbonne.telephone }}
+                                                            </span>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if search['submit'] == 8 %}
+                            {% for vg in voyages %}
+                                {% if vg.status == 1 %}
+                                    {% for dt in vg.listeDetailVoyage %}
+                                        {% if dt.position == 1 and dt.ville == search['localite'] and dt.idVoyage.idVehicule.typeVehicule == ValSearch.typeVehicule and dt.idVoyage.quantiteDetail >= search['quant'] %}
+                                            <tr>
+                                                <td class="text-center" id="headingOne" role="tab"
+                                                    style="background-color:rgba(255,81,46,0.14);width: 2px;">
+                                                    <a data-toggle="collapse" href="#td{{ dt.id }}" aria-expanded="true"
+                                                       aria-controls="td{{ dt.id }}">
+                                                        <i style="color: green;font-size: 20px;"
+                                                           class="fa fa-plus-circle"></i>
+                                                    </a>
+                                                </td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.idVoyage.idVehicule.matricule }}</td>
+                                                <td style="background-color: rgba(80,255,65,0.14);">
+                                                    {% if dt.idVoyage.idVehicule.typeVehicule != null %}
+                                                        {{ dt.idVoyage.idVehicule.typeVehicule.libelle }}
+                                                    {% endif %}
+                                                </td>
+                                                <td style="background-color: rgba(156,255,80,0.14);">{{ dt.ville }}</td>
+                                                <td style="background-color: rgba(255,57,254,0.18);">{{ dt.idVoyage.quantiteDetail }}</td>
+                                                <td style="background-color:rgba(156,255,80,0.22);">{{ dt.dateDepart.format('d/m/y') }}</td>
+                                            </tr>
+                                            <tr id="td{{ dt.id }}" role="tabpanel" aria-labelledby="headingOne"
+                                                data-parent="#accordion" class="collapse">
+                                                <td style="background-color: rgba(255,235,244,0.18)" colspan="5">
+                                                    <p>
+                                                        Cet vehicule a commencé son voyage
+                                                        le {{ dt.idVoyage.debutAt.format('d/m/y') }} en partant
+                                                        de {{ dt.idVoyage.villedepart }} à destination
+                                                        de {{ dt.idVoyage.villearrive }}. Il transporte
+                                                        du {{ dt.idVoyage.produits }}
+                                                        Il se trouve actuellement à {{ dt.ville }} avec une charge
+                                                        de {{ dt.idVoyage.quantiteDetail }} tonnes.
+                                                    </p>
+                                                    <span class="text-bold text-warning pull-left">Information sur le chauffeur : <br>Nom : {{ dt.idVoyage.idChauffeur.nom }}
+                                                        <br>
+                                                            Tel : {{ dt.idVoyage.idChauffeur.Tel }}
+                                                            </span>
+                                                    <span class="ml-5 text-center"><a class="text-decoration-none" href="#"><button class="ml-5 btn btn-primary">Contacter</button></a></span>
+                                                    <span class="text-bold text-warning pull-right">Information sur le transporteur : <br>Nom : {{ dt.idVoyage.idVehicule.idAbonne.nom }}
+                                                        <br>
+                                                                Tel : {{ dt.idVoyage.idVehicule.idAbonne.telephone }}
+                                                            </span>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="get-it">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 text-center p-3">
+                    <h3>Vous vouliez bénéficier des avantages de Frét Online</h3>
+                </div>
+                <div class="col-lg-4 text-center p-3">   <a href="#" class="btn btn-template-outlined-white">Inscrivez vous maintenant</a></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
